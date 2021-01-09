@@ -22,6 +22,10 @@ public class Room {
 
     @OneToMany(mappedBy="room")
     private Set<Window> windowR;
+
+
+
+
 public Room(){}
 
 public Room(String name,int floor){
