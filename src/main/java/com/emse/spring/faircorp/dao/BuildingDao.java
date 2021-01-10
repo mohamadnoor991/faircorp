@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface BuildingDao extends JpaRepository<Building, Long> {
 
-        @Query("select h from Heater h where h.name=:name")
+        @Query("select h from Building h where h.name=:name")
         List<Building> findByName(@Param("name") String name);
 }

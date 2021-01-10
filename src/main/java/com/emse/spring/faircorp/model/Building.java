@@ -1,11 +1,10 @@
 package com.emse.spring.faircorp.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "BUILDING")
 public class Building {
 
     @Id
@@ -15,12 +14,22 @@ public class Building {
     @Column(nullable = false)
     private String name;
 
+    @OneToMany(mappedBy = "building")
+    private List<Room> rooms;
     public Building() {
     }
 
     public Building(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 
     public Long getId() {

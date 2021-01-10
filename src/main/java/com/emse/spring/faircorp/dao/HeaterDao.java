@@ -12,6 +12,6 @@ public interface HeaterDao extends JpaRepository<Heater, Long> {
 //    @Query("select h from Heater h where h.name=:name")
 //    Heater findByName(@Param("name") String name);
 
-    @Query("select r from Room r where r.name=:name")
-    List<Room> findByName(@Param("name") String name);
+    @Query("select r from Heater r where r.name=:name")
+    Heater findByName(@Param("name") String name);
 }

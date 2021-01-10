@@ -11,9 +11,10 @@ public class Window {
     // (3)
     @Id
     @GeneratedValue
-    @Column(nullable = false)
+
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
 

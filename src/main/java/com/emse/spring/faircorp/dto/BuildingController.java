@@ -11,14 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/Building")
 @Transactional
 public class BuildingController {
-
-//    /api/buildings (GET) send building list
-///api/buildings (POST) add a building
-///api/buildings/{building_id} (GET) read a building
-///api/buildings/{building_id} (DELETE) delete a building and all its rooms and all its windows and heaters
 
 private final BuildingDao buildingDao;
 
@@ -36,7 +32,7 @@ private final BuildingDao buildingDao;
         return buildingDao.findById(id).map(BuildingDto::new).orElse(null); // (7)
     }
 
-    //add heater
+
     @PostMapping
     public BuildingDto create(@RequestBody BuildingDto bu) {
 

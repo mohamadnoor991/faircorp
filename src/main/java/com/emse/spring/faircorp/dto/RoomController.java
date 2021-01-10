@@ -1,13 +1,11 @@
 package com.emse.spring.faircorp.dto;
 
 
+import com.emse.spring.faircorp.dao.BuildingDao;
 import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dao.RoomDao;
 import com.emse.spring.faircorp.dao.WindowDao;
-import com.emse.spring.faircorp.model.Heater;
-import com.emse.spring.faircorp.model.Room;
-import com.emse.spring.faircorp.model.Window;
-import com.emse.spring.faircorp.model.WindowStatus;
+import com.emse.spring.faircorp.model.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,23 +17,18 @@ import java.util.stream.Collectors;
 @Transactional
 public class RoomController {
 
-///api/rooms (GET) send room list
-///api/rooms (POST) add a room
-///api/rooms/{room_id} (GET) read a room
-///api/rooms/{room_id} (DELETE) delete a room and all its windows and its heaters
-///api/rooms/{room_id}/switchWindow switch the room windows (OPEN to CLOSED or inverse)
-///api/rooms/{room_id}/switchHeaters switch the room heaters (ON to OFF or inverse)
-
 
     private final RoomDao roomDao;
-    private final HeaterDao heaterDaO;
+
     private final WindowDao windowDao;
+    private final BuildingDao buildingDao;
 
 
-    public RoomController(RoomDao roomDao, HeaterDao heaterDaO, WindowDao windowDao) {
+    public RoomController(RoomDao roomDao, HeaterDao heaterDaO, WindowDao windowDao, BuildingDao buildingDao) {
         this.roomDao = roomDao;
-        this.heaterDaO = heaterDaO;
+
         this.windowDao = windowDao;
+        this.buildingDao = buildingDao;
     }
 
     @GetMapping
@@ -49,17 +42,11 @@ public class RoomController {
 // for adding room
 @PostMapping
 public RoomDto create(@RequestBody RoomDto rmto) {
-        Window window= (Window) rmto.getWindows();//M8-1-2021
-    Heater heater= (Heater) rmto.getHeaterset();
+
     Room room = null;
-    // On creation id is not defined
-    if (rmto.getRoomId() == null) {
-        room = roomDao.save(new Room( rmto.getRoomName(), rmto.getFloor()));
-    }
-    else {
-        room = roomDao.getOne(rmto.getRoomId());
-        room = roomDao.getOne((long) rmto.getFloor());
-    }
+
+    Building building = buildingDao.getOne(rmto.getBuildingId());
+    room = roomDao.save(new Room(rmto.getRoomName(),rmto.getFloor(),building));
     return new RoomDto(room);
 }
 

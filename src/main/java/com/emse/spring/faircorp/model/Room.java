@@ -3,19 +3,22 @@ package com.emse.spring.faircorp.model;
 import javax.persistence.*;
 import java.util.Set;
 @Entity
+@Table(name = "ROOM")
 public class Room {
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
     @Column(nullable = false)
-    int floor;
+    private Integer floor;
 
     @Column(nullable = false)
-    String name;
+    private String name;
 
-    Double current_temperature ;
-   Double target_temperature ;
+    @Column
+    private  Double current_temperature ;
+    @Column
+    private Double target_temperature ;
 
     @OneToMany(mappedBy="room")
    private Set<Heater> heaterR;
@@ -23,15 +26,16 @@ public class Room {
     @OneToMany(mappedBy="room")
     private Set<Window> windowR;
 
-
+    @ManyToOne(optional = false)
+    private Building building;
 
 
 public Room(){}
 
-public Room(String name,int floor){
+public Room(String name,int floor, Building building){
     this.name = name;
     this.floor = floor;
-
+    this.building=building;
 
 }
 
@@ -89,5 +93,13 @@ public Room(String name,int floor){
 
     public void setWindowR(Set<Window> windowR) {
         this.windowR = windowR;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }
