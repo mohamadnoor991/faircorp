@@ -19,6 +19,8 @@ public class Heater {
     @ManyToOne(optional = false)
     private Room room;
 
+    @ManyToOne(optional = false)
+    private Building building;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -35,6 +37,7 @@ public class Heater {
         this.power = power;
         this.room = room;
         this.heaterStatus= heaterStatus;
+//        this.building=building;
 
 
     }
@@ -78,5 +81,13 @@ public class Heater {
 
     public void setHeaterStatus(HeaterStatus heaterStatus) {
         this.heaterStatus = heaterStatus;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }

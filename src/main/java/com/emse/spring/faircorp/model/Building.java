@@ -2,6 +2,7 @@ package com.emse.spring.faircorp.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "BUILDING")
@@ -14,8 +15,18 @@ public class Building {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "building")
-    private List<Room> rooms;
+    @OneToMany(mappedBy = "building",cascade = CascadeType.REMOVE)
+    private Set<Room> room;
+
+    @OneToMany(mappedBy="building",cascade = CascadeType.REMOVE)
+    private Set<Heater> heaterR;
+
+    @OneToMany(mappedBy="building",cascade = CascadeType.REMOVE)
+    private Set<Window> windowR;
+
+
+
+
     public Building() {
     }
 
@@ -24,12 +35,12 @@ public class Building {
         this.name = name;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+    public Set<Room> getRoom() {
+        return room;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRoom(Set<Room> room) {
+        this.room = room;
     }
 
     public Long getId() {
@@ -46,5 +57,21 @@ public class Building {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Heater> getHeaterR() {
+        return heaterR;
+    }
+
+    public void setHeaterR(Set<Heater> heaterR) {
+        this.heaterR = heaterR;
+    }
+
+    public Set<Window> getWindowR() {
+        return windowR;
+    }
+
+    public void setWindowR(Set<Window> windowR) {
+        this.windowR = windowR;
     }
 }

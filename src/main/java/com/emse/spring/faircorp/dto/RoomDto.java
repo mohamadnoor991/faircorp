@@ -1,10 +1,13 @@
 package com.emse.spring.faircorp.dto;
 
 import com.emse.spring.faircorp.model.Heater;
+import com.emse.spring.faircorp.model.HeaterStatus;
 import com.emse.spring.faircorp.model.Room;
 import com.emse.spring.faircorp.model.Window;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class RoomDto {
     private String roomName;
@@ -12,9 +15,11 @@ public class RoomDto {
     private Double current_temperature;
     private  Double target_temperature;
     private  int floor;
-    private List<Heater> heaterset;
-    private  List <Window> windows;
+    private List<WindowDto> windows;
+    private List<HeaterDto> heaters;
     private Long buildingId;
+
+
     public RoomDto() {
     }
 
@@ -24,9 +29,10 @@ public class RoomDto {
         this.current_temperature = room.getCurrent_temperature();
         this.target_temperature = room.getTarget_temperature();
         this.floor = room.getFloor();
-        this.heaterset= (List<Heater>) room.getHeaterR();/// ? check for that
-        this.windows= (List<Window>) room.getWindowR();///?check for that
         this.buildingId=room.getBuilding().getId();
+        this.windows = room.getWindowR().stream().map(WindowDto::new).collect(Collectors.toList());
+        this.heaters = room.getHeaterR().stream().map(HeaterDto::new).collect(Collectors.toList());;
+
     }
 
     public String getRoomName() {
@@ -69,21 +75,6 @@ public class RoomDto {
         this.target_temperature = target_temperature;
     }
 
-    public List<Heater> getHeaterset() {
-        return heaterset;
-    }
-
-    public void setHeaterset(List<Heater> heaterset) {
-        this.heaterset = heaterset;
-    }
-
-    public List<Window> getWindows() {
-        return windows;
-    }
-
-    public void setWindows(List<Window> windows) {
-        this.windows = windows;
-    }
 
     public Long getBuildingId() {
         return buildingId;
@@ -91,5 +82,29 @@ public class RoomDto {
 
     public void setBuildingId(Long buildingId) {
         this.buildingId = buildingId;
+    }
+
+    public Double getCurrent_temperature() {
+        return current_temperature;
+    }
+
+    public void setCurrent_temperature(Double current_temperature) {
+        this.current_temperature = current_temperature;
+    }
+
+    public List<WindowDto> getWindows() {
+        return windows;
+    }
+
+    public void setWindows(List<WindowDto> windows) {
+        this.windows = windows;
+    }
+
+    public List<HeaterDto> getHeaters() {
+        return heaters;
+    }
+
+    public void setHeaters(List<HeaterDto> heaters) {
+        this.heaters = heaters;
     }
 }

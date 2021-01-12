@@ -1,7 +1,9 @@
 package com.emse.spring.faircorp.dto;
 
+import com.emse.spring.faircorp.dao.BuildingDao;
 import com.emse.spring.faircorp.dao.RoomDao;
 import com.emse.spring.faircorp.dao.WindowDao;
+import com.emse.spring.faircorp.model.Building;
 import com.emse.spring.faircorp.model.Room;
 import com.emse.spring.faircorp.model.Window;
 import com.emse.spring.faircorp.model.WindowStatus;
@@ -19,10 +21,12 @@ public class WindowController {
 
     private final WindowDao windowDao;
     private final RoomDao roomDao;
+    private final BuildingDao buildingDao;
 
-    public WindowController(WindowDao windowDao ,RoomDao roomDao) { //, RoomDao roomDao
+    public WindowController(WindowDao windowDao, RoomDao roomDao, BuildingDao buildingDao) { //, RoomDao roomDao
         this.windowDao = windowDao;
         this.roomDao = roomDao;
+        this.buildingDao = buildingDao;
     }
 
     @GetMapping // (5)
@@ -46,10 +50,11 @@ public class WindowController {
     public WindowDto create(@RequestBody WindowDto dto) {
         // WindowDto must always contain the window room
         Room room = roomDao.getOne(dto.getRoomId());
+        Building building=buildingDao.getOne(dto.getId());
         Window window = null;
         // On creation id is not defined
         if (dto.getId() == null) {
-            window = windowDao.save(new Window( dto.getName(), dto.getWindowStatus(), room));
+            window = windowDao.save(new Window( dto.getName(), dto.getWindowStatus(), room,building));
         }
         else {
             window = windowDao.getOne(dto.getId());

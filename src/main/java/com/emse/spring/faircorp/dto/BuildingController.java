@@ -37,15 +37,16 @@ private final BuildingDao buildingDao;
     public BuildingDto create(@RequestBody BuildingDto bu) {
 
         Building building = null;
-        // On creation id is not defined
-        if (bu.getId() == null) {
-            building = buildingDao.save(new Building( bu.getId(), bu.getName()));
-        }
-        else {
-            building = buildingDao.getOne(bu.getId());
+//        // On creation id is not defined
+//        if (bu.getId() == null) {
+             buildingDao.save(new Building( bu.getId(), bu.getName()));
+//        }
+//        else {
+//            building = buildingDao.getOne(bu.getId());
+//
+//        }
+        return new BuildingDto( buildingDao.save(new Building( bu.getId(), bu.getName())));
 
-        }
-        return new BuildingDto(building);
     }
 
     @DeleteMapping(path = "/{id}")

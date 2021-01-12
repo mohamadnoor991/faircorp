@@ -25,14 +25,18 @@ public class Window {
     @ManyToOne(optional = false) //Notification to create window
     private Room room;
 
+    @ManyToOne(optional = false)
+    private Building building;
+
 
     public Window() {
     }
 
-    public Window(String name, WindowStatus status, Room room) {
+    public Window(String name, WindowStatus status, Room room,Building building) {
         this.window_status = status;
         this.name = name;
         this.room = room;
+        this.building=building;
     }
 
     public Long getId() {
@@ -65,6 +69,18 @@ public class Window {
 
     public void setRoom_id(Room room_id) {
         this.room = room_id;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.emse.spring.faircorp.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 @Entity
 @Table(name = "ROOM")
@@ -20,14 +21,16 @@ public class Room {
     @Column
     private Double target_temperature ;
 
-    @OneToMany(mappedBy="room")
-   private Set<Heater> heaterR;
+    @OneToMany(mappedBy="room",cascade = CascadeType.REMOVE)
+   private List<Heater> heaterR;
 
-    @OneToMany(mappedBy="room")
-    private Set<Window> windowR;
+    @OneToMany(mappedBy="room",cascade = CascadeType.REMOVE)
+    private List<Window> windowR;
 
     @ManyToOne(optional = false)
     private Building building;
+//    @ManyToOne(optional = false)
+//    private Heater heater;
 
 
 public Room(){}
@@ -36,8 +39,10 @@ public Room(String name,int floor, Building building){
     this.name = name;
     this.floor = floor;
     this.building=building;
+//    this.heater=heater;
 
 }
+
 
     public Long getId() {
         return id;
@@ -59,11 +64,11 @@ public Room(String name,int floor, Building building){
         return target_temperature;
     }
 
-    public Set<Heater> getHeaterR() {
+    public List<Heater> getHeaterR() {
         return heaterR;
     }
 
-    public Set<Window> getWindowR() {
+    public List<Window> getWindowR() {
         return windowR;
     }
 
@@ -87,11 +92,11 @@ public Room(String name,int floor, Building building){
         this.target_temperature = target_temperature;
     }
 
-    public void setHeaterR(Set<Heater> heaterR) {
+    public void setHeaterR(List<Heater> heaterR) {
         this.heaterR = heaterR;
     }
 
-    public void setWindowR(Set<Window> windowR) {
+    public void setWindowR(List<Window> windowR) {
         this.windowR = windowR;
     }
 
@@ -101,5 +106,9 @@ public Room(String name,int floor, Building building){
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
     }
 }
